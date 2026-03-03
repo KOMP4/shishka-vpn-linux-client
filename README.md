@@ -25,7 +25,7 @@ sudo nano /etc/shadowsocks-libdev/myvpn.json
 ``` json
 {
     "server":"берется из конца ключа",
-    "server_port":берется из конца ключа,
+    "server_port":"берется из конца ключа",
     "local_address":"127.0.0.1",
     "local_port":1080,
     "password":"берется из расшифровки ключа",
