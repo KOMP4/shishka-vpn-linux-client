@@ -1,0 +1,26 @@
+[Unit]
+Description=Combined Outline VPN
+After=network.target
+
+[Service]
+Type=simple
+
+# Вся подготовка в одном вызове
+ExecStartPre=/usr/local/bin/tun-manage.sh pre-start
+# Запуск ss-local
+ExecStartPre=/usr/bin/ss-local -c /etc/shadowsocks-libdev/myvpn.json -u -f /tmp/ss-local.pid
+
+# Основной процесс
+ExecStart=/usr/sbin/tun2socks-linux-amd64 -device tun0 -proxy socks5://127.0.0.1:1080 -interface wlp0s20f3 -udp-timeout 1m
+
+# Маршруты
+ExecStartPost=/usr/local/bin/tun-manage.sh up
+
+# Очистка
+ExecStopPost=/usr/local/bin/tun-manage.sh down
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
