@@ -2,8 +2,8 @@
 
 # --- НАСТРОЙКИ ---
 INTERFACE="wlp0s20f3"
-VPN_SERVER="103.228.168.11"
-VPN_PORT="45173"
+VPN_SERVER="****"
+VPN_PORT="****"
 TUN_ADDR="198.18.0.1"
 LIST_FILE="/etc/shadowsocks-libdev/vpn.list"
 
