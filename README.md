@@ -10,7 +10,7 @@ sudo apt install shadowsocks-libev
 
 ```bash
 wget https://github.com/xjasonlyu/tun2socks/releases/download/v2.6.0/tun2socks-linux-amd64.zip
-unzip unzip tun2socks-linux-amd64.zip
+unzip tun2socks-linux-amd64.zip
 cp tun2socks-linux-amd64 /usr/sbin/
 chmod +x /usr/sbin/tun2socks-linux-amd64
 ```
