@@ -8,7 +8,7 @@ Type=simple
 # Вся подготовка в одном вызове
 ExecStartPre=/usr/local/bin/tun-manage.sh pre-start
 # Запуск ss-local
-ExecStartPre=/usr/bin/ss-local -c /etc/shadowsocks-libdev/myvpn.json -u -f /tmp/ss-local.pid
+ExecStartPre=/usr/bin/ss-local -c /etc/shadowsocks-libev/myvpn.json -u -f /tmp/ss-local.pid
 
 # Основной процесс
 ExecStart=/usr/sbin/tun2socks-linux-amd64 -device tun0 -proxy socks5://127.0.0.1:1080 -interface wlp0s20f3 -udp-timeout 1m
