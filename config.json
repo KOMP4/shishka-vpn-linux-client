@@ -1,0 +1,90 @@
+{
+  "log": {
+    "level": "info",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "dns-remote",
+        "address": "https://1.1.1.1",
+        "detour": "proxy"
+      },
+      {
+        "tag": "dns-direct",
+        "address": "8.8.8.8",
+        "detour": "direct"
+      }
+    ],
+    "rules": [
+      {
+        "domain": ["discord.com", "discord.gg", "discordapp.net"],
+        "server": "dns-remote" 
+      },
+      {
+        "outbound": "any",
+        "server": "dns-direct"
+      }
+    ],
+    "final": "dns-remote",
+    "strategy": "prefer_ipv4"
+  },
+  "inbounds": [
+    {
+      "type": "tun",
+      "tag": "tun-in",
+      "interface_name": "tun0",
+      "address": "172.19.0.1/30",
+      "auto_route": true,
+      "strict_route": true,
+      "stack": "gvisor",
+      "sniff": true
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "shadowsocks",
+      "tag": "proxy",
+      "server": "IP_ВАШЕГО_СЕРВЕРА",
+      "server_port": ПОРТ_ВАШЕГО_СЕРВЕРА,
+      "method": "chacha20-ietf-poly1305",
+      "password": "ДЕКОДИРОВАННЫЙ ПАРОЛЬ",
+      "tcp_multi_path": true,
+      "tcp_fast_open": true,
+      //"prefix": "\u0016\u0003\u0001\u0000\u00a8\u0001\u0001",
+      "udp_over_tcp": {
+        "enabled": true,
+        "version": 2
+      },
+    "multiplex": {
+      "enabled": true,
+      "protocol": "smux",
+      "max_streams": 32,
+      "padding": true
+      }
+    },
+    {
+      "type": "direct",
+      "tag": "direct",
+      "bind_interface": "ВАШ ИНТЕРФЕЙС"
+    }
+  ],
+"route": {
+  "rules": [
+    {
+      "ip_cidr": ["IP_ВАШЕГО_СЕРВЕРА/32"], 
+      "outbound": "direct"
+    },
+    {
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "ip_is_private": true,
+      "outbound": "direct"
+    }
+  ],
+  "auto_detect_interface": true,
+  "final": "proxy"
+  }
+}
